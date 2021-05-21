@@ -94,6 +94,8 @@ pytest-html==3.1.1
     # via -r setup/requirements/dev-requirements.in
 pytest-metadata==1.11.0
     # via pytest-html
+pytest-venv==0.2.1
+    # via -r setup/requirements/dev-requirements.in
 pytest-xdist==2.2.1
     # via -r setup/requirements/dev-requirements.in
 pytest==6.2.2
@@ -104,6 +106,7 @@ pytest==6.2.2
     #   pytest-forked
     #   pytest-html
     #   pytest-metadata
+    #   pytest-venv
     #   pytest-xdist
 pyyaml==5.4.1
     # via pre-commit
@@ -129,7 +132,9 @@ typing-extensions==3.7.4.3
 urllib3==1.26.4
     # via selenium
 virtualenv==20.4.2
-    # via pre-commit
+    # via
+    #   pre-commit
+    #   pytest-venv
 wcwidth==0.2.5
     # via prompt-toolkit
 
