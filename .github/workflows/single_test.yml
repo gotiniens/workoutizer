@@ -48,5 +48,6 @@ jobs:
         pytest tests/ -vv -n2
 
     - name: Run Tests Chrome
+      continue-on-error: True
       run: |
         pytest tests/ -vv -n2 --browser=Chrome
