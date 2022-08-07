@@ -155,6 +155,21 @@ class DashboardView(View, PlotView):
         return render(request, self.template_name, {**context})
 
 
+def workouts_view(request):
+    sports = models.Sport.objects.all().order_by("name")
+    activities = models.Activity.objects.all()
+    return render(
+        request,
+        "workouts/workouts.html",
+        {
+            "page_name": "Workouts",
+            "style": Style,
+            "sports": sports,
+            "activities": activities,
+        },
+    )
+
+
 def settings_view(request):
     sports = models.Sport.objects.all().order_by("name")
     settings = models.get_settings()

@@ -36,6 +36,17 @@
             </a>
             </li>
 
+            {% if page_name == "Workouts" %}
+                <li class="active ">
+            {% else %}
+                <li>
+            {% endif %}
+            <a href="{% url 'workouts' %}">
+                <i class="fas fa-calendar"></i>
+                <p>Workouts</p>
+            </a>
+            </li>
+
             {% if page_name == "Sports" %}
                 <li class="active ">
             {% else %}
