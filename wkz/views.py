@@ -157,7 +157,7 @@ class DashboardView(View, PlotView):
 
 def workouts_view(request):
     sports = models.Sport.objects.all().order_by("name")
-    activities = models.Activity.objects.all()
+    workouts = models.Workout.objects.all().order_by("name")
     return render(
         request,
         "workouts/workouts.html",
@@ -165,7 +165,7 @@ def workouts_view(request):
             "page_name": "Workouts",
             "style": Style,
             "sports": sports,
-            "activities": activities,
+            "workouts": workouts,
         },
     )
 

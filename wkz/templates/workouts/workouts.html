@@ -1,5 +1,35 @@
 {% extends 'lib/base.html' %}
 {% load static %}
 {% block body %}
-<h1>Workouts</h1>
+<title>Workouts</title>
+<div class="row">
+    <div class="col-md-10 mr-auto ml-auto">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Workouts Overview</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Workout Name</th>
+                                <th>Number of steps</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for workout in workouts %}
+                            <tr>
+                            <td>{{ workout.name }}</td>
+                            <td>123</td> # TODO: Show number of steps
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            <a href="{% url 'add-sport' %}" class="btn btn-default"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add new Workout</a>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
