@@ -1,7 +1,7 @@
 import django_eventstream
 from django.urls import include, path, re_path
 
-from wkz import activity_views, api, awards_views, sport_views, views
+from wkz import activity_views, api, awards_views, sport_views, views, workout_views
 
 urlpatterns = [
     # home Dashboard
@@ -34,5 +34,5 @@ urlpatterns = [
     # events channel
     path("events/", include(django_eventstream.urls), {"channels": ["event"]}),
     # Workouts
-    path("workouts/", views.workouts_view, name="workouts"),
+    path("workout/", workout_views.WorkoutsView.as_view(), name="workout"),
 ]
