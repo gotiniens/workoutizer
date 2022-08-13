@@ -7,6 +7,7 @@ from colorfield.fields import ColorField
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.utils import timezone
+from fit_tool.profile.profile_type import Intensity, StrokeType, WorkoutEquipment, WorkoutStepDuration, WorkoutStepTarget
 
 from wkz.io.file_importer import run_importer
 from wkz.tools import sse
@@ -223,3 +224,78 @@ class Settings(models.Model):
 
 def get_settings():
     return Settings.objects.get_or_create(pk=1)[0]
+
+
+class Workout(models.Model):
+    """
+    Contains the workout, an workout exists of multiple WorkoutSteps
+    """
+
+    name = models.CharField(max_length=200, verbose_name="Workout Name", default="unknown")
+    sport = models.ForeignKey(
+        Sport, on_delete=models.SET_DEFAULT, default=default_sport, verbose_name="Sport"
+    )  # TODO Koppel aan WKZ sport ID aan FIT sport ID
+
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+
+class WorkoutStep(models.Model):
+    """
+    WorkoutStep are all the steps from an workout en their targets, e.g. Run for 2min with heartrate in zone 2
+    or bike for 10 minutes with an speed of 30km/h
+    """
+
+    def __enum2choices(enum):
+        choices = []
+        for item in enum:
+            choices.append((item, item.value))
+        return choices
+
+    name = models.CharField(max_length=256, verbose_name="Workout Step Name", default="unknown")
+    workout = models.ForeignKey(Workout, on_delete=models.CASCADE, verbose_name="Workout")
+
+    intensity = models.IntegerField(choices=__enum2choices(Intensity), null=True, blank=True)
+    notes = models.CharField(max_length=256, verbose_name="Workout Step Notes", null=True, blank=True)
+    equipment = models.IntegerField(choices=__enum2choices(WorkoutEquipment), null=True, blank=True)
+    exercise_category = models.IntegerField(null=True, blank=True)
+    exercise_name = models.IntegerField(null=True, blank=True)
+    exercise_weight = models.IntegerField(null=True, blank=True)
+    weight_display_unit = models.IntegerField(null=True, blank=True)
+
+    duration_type = models.IntegerField(choices=__enum2choices(WorkoutStepDuration), null=True, blank=True)
+    duration_value = models.IntegerField(null=True, blank=True)
+    duration_time = models.IntegerField(null=True, blank=True)
+    duration_distance = models.IntegerField(null=True, blank=True)
+    duration_hr = models.IntegerField(null=True, blank=True)
+    duration_calories = models.IntegerField(null=True, blank=True)
+    duration_step = models.IntegerField(null=True, blank=True)
+    duration_power = models.IntegerField(null=True, blank=True)
+    duration_reps = models.IntegerField(null=True, blank=True)
+
+    target_type = models.IntegerField(choices=__enum2choices(WorkoutStepTarget), null=True, blank=True)
+    target_value = models.IntegerField(null=True, blank=True)
+    target_speed_zone = models.IntegerField(null=True, blank=True)
+    target_hr_zone = models.IntegerField(null=True, blank=True)
+    target_cadence_zone = models.IntegerField(null=True, blank=True)
+    target_power_zone = models.IntegerField(null=True, blank=True)
+    target_repeat_steps = models.IntegerField(null=True, blank=True)
+    target_repeat_time = models.IntegerField(null=True, blank=True)
+    target_repeat_distance = models.IntegerField(null=True, blank=True)
+    target_repeat_calories = models.IntegerField(null=True, blank=True)
+    target_repeat_hr = models.IntegerField(null=True, blank=True)
+    target_repeat_power = models.IntegerField(null=True, blank=True)
+    target_stroke_type = models.IntegerField(choices=__enum2choices(StrokeType), null=True, blank=True)
+    custom_target_value_low = models.IntegerField(null=True, blank=True)
+    custom_target_speed_low = models.IntegerField(null=True, blank=True)
+    custom_target_hear_rate_low = models.IntegerField(null=True, blank=True)
+    custom_target_cadence_low = models.IntegerField(null=True, blank=True)
+    custom_target_power_low = models.IntegerField(null=True, blank=True)
+    custom_target_value_high = models.IntegerField(null=True, blank=True)
+    custom_target_speed_high = models.IntegerField(null=True, blank=True)
+    custom_target_hear_rate_high = models.IntegerField(null=True, blank=True)
+    custom_target_cadence_high = models.IntegerField(null=True, blank=True)
+    custom_target_power_high = models.IntegerField(null=True, blank=True)
+
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
