@@ -1,6 +1,6 @@
 from django import forms
 
-from wkz.models import Activity, Settings, Sport
+from wkz.models import Activity, Settings, Sport, Workout
 
 DATETIMEPICKER_FORMAT = "%m/%d/%Y %I:%M %p"
 
@@ -63,3 +63,21 @@ class EditSettingsForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(EditSettingsForm, self).__init__(*args, **kwargs)
         set_field_attributes(self.visible_fields())
+
+
+class AddWorkoutMainForm(forms.ModelForm):
+    class Meta:
+        model = Workout
+        exclude = ("created", "modified")
+
+    def __init__(self, *args, **kwargs):
+        super(AddWorkoutMainForm, self).__init__(*args, **kwargs)
+        set_field_attributes(self.visible_fields())
+
+
+class AddWorkoutIntervalsForm(forms.Form):
+    repeats = forms.IntegerField()
+    run_duration_sec = forms.IntegerField()
+    rest_duration_sec = forms.IntegerField()
+    warm_up = forms.BooleanField(required=False)
+    cool_down = forms.BooleanField(required=False)
