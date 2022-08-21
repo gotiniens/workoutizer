@@ -181,6 +181,9 @@ class Settings(models.Model):
     path_to_trace_dir = models.CharField(
         max_length=200, default=django_settings.TRACKS_DIR, verbose_name="Path to Traces Directory"
     )
+    path_to_workouts_dir = models.CharField(
+        max_length=200, default=django_settings.WORKOUTS_DIR, verbose_name="Path to Workouts Directory"
+    )
     path_to_garmin_device = models.CharField(
         max_length=200,
         default="",

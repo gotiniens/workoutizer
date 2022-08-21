@@ -17,6 +17,7 @@ else:
 SQLITE_FILE = "db.sqlite3"
 WORKOUTIZER_DB_PATH = os.path.join(WORKOUTIZER_DIR, SQLITE_FILE)
 TRACKS_DIR = os.path.join(WORKOUTIZER_DIR, "tracks")
+WORKOUTS_DIR = os.path.join(WORKOUTIZER_DIR, "workouts")
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = "/static/"
