@@ -39,6 +39,23 @@ def CreateInterval(form, workout):
         log.debug(f"repeat: {repeat}")
         log.debug(f"run for {run_duration_sec} secs")
         log.debug(f"rest for {rest_duration_sec} secs")
+
+        run = WorkoutStep()
+        run.workout = workout
+        run.name = f"run for {run_duration_sec} secs"
+        run.duration_type = WorkoutStepDuration.TIME.value
+        run.duration_value = run_duration_sec
+        run.intensity = Intensity.INTERVAL.value
+        run.save()
+
+        rest = WorkoutStep()
+        rest.workout = workout
+        rest.name = f"rest for {rest_duration_sec} secs"
+        rest.duration_type = WorkoutStepDuration.TIME.value
+        rest.duration_value = rest_duration_sec
+        rest.intensity = Intensity.REST.value
+        rest.save()
+
         repeat += 1
 
     if cool_down:
