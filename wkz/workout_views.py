@@ -9,6 +9,7 @@ class WorkoutsView(View):
     template_name = "workout/workouts.html"
 
     def get(self, request):
+        sports = models.Sport.objects.all().order_by("name")
         workouts = models.Workout.objects.all().order_by("name")
         for workout in workouts:
             setattr(workout, "number_of_steps", len(models.WorkoutStep.objects.filter(workout=workout.id)))
@@ -17,6 +18,7 @@ class WorkoutsView(View):
             request,
             self.template_name,
             {
+                "sports": sports,
                 "page_name": "Workouts",
                 "style": Style,
                 "workouts": workouts,
