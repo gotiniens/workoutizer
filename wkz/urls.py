@@ -35,4 +35,5 @@ urlpatterns = [
     path("events/", include(django_eventstream.urls), {"channels": ["event"]}),
     # Workouts
     path("workout/", workout_views.WorkoutsView.as_view(), name="workout"),
+    path("add-workout/", workout_views.AddWorkoutView.as_view(), name="add-workout"),
 ]
