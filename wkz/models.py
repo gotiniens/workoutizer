@@ -235,9 +235,9 @@ class Workout(models.Model):
     """
 
     name = models.CharField(max_length=200, verbose_name="Workout Name", default="unknown")
-    sport = models.ForeignKey(
-        Sport, on_delete=models.SET_DEFAULT, default=default_sport, verbose_name="Sport"
-    )  # TODO Koppel aan WKZ sport ID aan FIT sport ID
+    sport = models.ForeignKey(Sport, on_delete=models.SET_DEFAULT, default=default_sport, verbose_name="Sport")
+    file_name = models.CharField(max_length=100, editable=False, null=True, blank=True)
+    md5sum = models.CharField(max_length=32, null=True, blank=True)  # TODO: is an md5sum really unique?
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
