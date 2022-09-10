@@ -68,7 +68,7 @@ class EditSettingsForm(forms.ModelForm):
 class AddWorkoutMainForm(forms.ModelForm):
     class Meta:
         model = Workout
-        exclude = ("created", "modified")
+        exclude = ("created", "modified", "md5sum")
 
     def __init__(self, *args, **kwargs):
         super(AddWorkoutMainForm, self).__init__(*args, **kwargs)
