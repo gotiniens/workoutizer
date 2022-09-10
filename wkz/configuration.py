@@ -71,3 +71,6 @@ file_importer_interval = 1
 
 # interval in minutes for periodic file collector
 file_collector_interval = file_importer_interval
+
+# interval in minutes for periodic workout creator
+workout_creator_interval = file_importer_interval

@@ -3,7 +3,7 @@ from huey.contrib.djhuey import periodic_task, task
 
 from wkz import configuration as cfg
 from wkz.device.mount import mount_device_and_collect_files
-from wkz.watchdogs import trigger_device_watchdog, trigger_file_watchdog
+from wkz.watchdogs import trigger_device_watchdog, trigger_file_watchdog, trigger_workout_creator
 
 
 @task()
@@ -19,3 +19,8 @@ def check_for_mounted_device():
 @periodic_task(crontab(minute=f"*/{cfg.file_collector_interval}"))
 def check_for_new_activity_files():
     trigger_file_watchdog()
+
+
+@periodic_task(crontab(minute=f"*/{cfg.workout_creator_interval}"))
+def check_for_new_workouts():
+    trigger_workout_creator()

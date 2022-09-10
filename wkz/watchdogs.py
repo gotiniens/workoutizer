@@ -5,6 +5,7 @@ from pathlib import Path
 from wkz import models
 from wkz.io.file_importer import run_importer
 from wkz.io.fit_collector import collect_fit_files_from_device
+from wkz.io.workout_creator import workout_creator
 
 log = logging.getLogger(__name__)
 
@@ -15,6 +16,14 @@ def trigger_file_watchdog():
         run_importer(models)
     else:
         log.warning(f"File Watchdog: {settings.path_to_trace_dir} is not a valid directory.")
+
+
+def trigger_workout_creator():
+    settings = models.get_settings()
+    if Path(settings.path_to_workouts_dir).is_dir():
+        workout_creator()
+    else:
+        log.warning(f"Workout Creator: {settings.path_to_workouts_dir} is not a valid directory.")
 
 
 def trigger_device_watchdog():
