@@ -19,11 +19,11 @@ def CreateWorkout(form):
 
 def CreateInterval(form, workout):
     repeats = form.cleaned_data["repeats"]
-    repeat = 0
     run_duration_sec = form.cleaned_data["run_duration_sec"]
     rest_duration_sec = form.cleaned_data["rest_duration_sec"]
     warm_up = form.cleaned_data["warm_up"]
     cool_down = form.cleaned_data["cool_down"]
+    workoutstep_counter = -1
 
     if warm_up:
         log.debug("warm up until lap key")
@@ -34,29 +34,38 @@ def CreateInterval(form, workout):
         WarmUp.duration_type = WorkoutStepDuration.OPEN.value
         WarmUp.intensity = Intensity.WARMUP.value
         WarmUp.save()
+        workoutstep_counter += 1
 
-    while repeat < repeats:
-        log.debug(f"repeat: {repeat}")
-        log.debug(f"run for {run_duration_sec} secs")
-        log.debug(f"rest for {rest_duration_sec} secs")
+    log.debug(f"repeats: {repeats}")
+    log.debug(f"run for {run_duration_sec} secs")
+    log.debug(f"rest for {rest_duration_sec} secs")
 
-        run = WorkoutStep()
-        run.workout = workout
-        run.name = f"run for {run_duration_sec} secs"
-        run.duration_type = WorkoutStepDuration.TIME.value
-        run.duration_value = run_duration_sec
-        run.intensity = Intensity.INTERVAL.value
-        run.save()
+    run = WorkoutStep()
+    run.workout = workout
+    run.name = f"run for {run_duration_sec} secs"
+    run.duration_type = WorkoutStepDuration.TIME.value
+    run.duration_value = run_duration_sec
+    run.intensity = Intensity.INTERVAL.value
+    run.save()
+    workoutstep_counter += 1
+    repeat_from_workoutstep = workoutstep_counter
 
-        rest = WorkoutStep()
-        rest.workout = workout
-        rest.name = f"rest for {rest_duration_sec} secs"
-        rest.duration_type = WorkoutStepDuration.TIME.value
-        rest.duration_value = rest_duration_sec
-        rest.intensity = Intensity.REST.value
-        rest.save()
+    rest = WorkoutStep()
+    rest.workout = workout
+    rest.name = f"rest for {rest_duration_sec} secs"
+    rest.duration_type = WorkoutStepDuration.TIME.value
+    rest.duration_value = rest_duration_sec
+    rest.intensity = Intensity.REST.value
+    rest.save()
+    workoutstep_counter += 1
 
-        repeat += 1
+    repeat = WorkoutStep()
+    repeat.workout = workout
+    repeat.name = f"Repeat the last 2 steps {repeats} time"
+    repeat.duration_type = WorkoutStepDuration.REPEAT_UNTIL_STEPS_CMPLT.value
+    repeat.target_repeat_steps = repeats
+    repeat.duration_step = repeat_from_workoutstep  # TODO: If 0 this does not show op in FIT file, bug in library?
+    repeat.save()
 
     if cool_down:
         log.debug("Cool down until lap key")
