@@ -19,7 +19,7 @@ def CreateWorkout(form):
 
 def CreateInterval(form, workout):
     repeats = form.cleaned_data["repeats"]
-    run_duration_sec = form.cleaned_data["run_duration_sec"]
+    active_duration_sec = form.cleaned_data["active_duration_sec"]
     rest_duration_sec = form.cleaned_data["rest_duration_sec"]
     warm_up = form.cleaned_data["warm_up"]
     cool_down = form.cleaned_data["cool_down"]
@@ -37,16 +37,16 @@ def CreateInterval(form, workout):
         workoutstep_counter += 1
 
     log.debug(f"repeats: {repeats}")
-    log.debug(f"run for {run_duration_sec} secs")
+    log.debug(f"active for {active_duration_sec} secs")
     log.debug(f"rest for {rest_duration_sec} secs")
 
-    run = WorkoutStep()
-    run.workout = workout
-    run.name = f"run for {run_duration_sec} secs"
-    run.duration_type = WorkoutStepDuration.TIME.value
-    run.duration_value = run_duration_sec
-    run.intensity = Intensity.INTERVAL.value
-    run.save()
+    active = WorkoutStep()
+    active.workout = workout
+    active.name = f"active for {active_duration_sec} secs"
+    active.duration_type = WorkoutStepDuration.TIME.value
+    active.duration_value = active_duration_sec
+    active.intensity = Intensity.INTERVAL.value
+    active.save()
     workoutstep_counter += 1
     repeat_from_workoutstep = workoutstep_counter
 

@@ -77,7 +77,7 @@ class AddWorkoutMainForm(forms.ModelForm):
 
 class AddWorkoutIntervalsForm(forms.Form):
     repeats = forms.IntegerField()
-    run_duration_sec = forms.IntegerField()
+    active_duration_sec = forms.IntegerField()
     rest_duration_sec = forms.IntegerField()
     warm_up = forms.BooleanField(required=False)
     cool_down = forms.BooleanField(required=False)
