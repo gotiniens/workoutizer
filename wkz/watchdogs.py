@@ -5,6 +5,7 @@ from pathlib import Path
 from wkz import models
 from wkz.io.file_importer import run_importer
 from wkz.io.fit_collector import collect_fit_files_from_device
+from wkz.io.fit_exporter import collect_fit_files_to_export
 from wkz.io.workout_creator import workout_creator
 
 log = logging.getLogger(__name__)
@@ -34,11 +35,14 @@ def trigger_device_watchdog():
         _watch_for_device(
             path_to_trace_dir=settings.path_to_trace_dir,
             path_to_garmin_device=settings.path_to_garmin_device,
+            path_to_workouts_dir=settings.path_to_workouts_dir,
             delete_files_after_import=settings.delete_files_after_import,
         )
 
 
-def _watch_for_device(path_to_garmin_device: str, path_to_trace_dir: str, delete_files_after_import: bool):
+def _watch_for_device(
+    path_to_garmin_device: str, path_to_trace_dir: str, path_to_workouts_dir, delete_files_after_import: bool
+):
     if Path(path_to_garmin_device).is_dir():
         sub_dirs = []
         for filename in os.listdir(path_to_garmin_device):
@@ -50,6 +54,10 @@ def _watch_for_device(path_to_garmin_device: str, path_to_trace_dir: str, delete
                 path_to_garmin_device=path_to_garmin_device,
                 target_location=path_to_trace_dir,
                 delete_files_after_import=delete_files_after_import,
+            )
+            log.debug("And file exporter")
+            collect_fit_files_to_export(
+                path_to_garmin_device=path_to_garmin_device, path_to_files_to_export=path_to_workouts_dir
             )
     else:
         log.warning(f"Device Watchdog: {path_to_garmin_device} is not a valid directory.")

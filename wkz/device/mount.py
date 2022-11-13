@@ -9,6 +9,7 @@ import pyudev
 
 from wkz import models
 from wkz.io.fit_collector import collect_fit_files_from_device
+from wkz.io.fit_exporter import collect_fit_files_to_export
 
 RETRIES = 5
 WAIT = 20
@@ -47,6 +48,9 @@ def mount_device_and_collect_files() -> None:
             path_to_garmin_device=path_to_garmin_device,
             target_location=settings.path_to_trace_dir,
             delete_files_after_import=settings.delete_files_after_import,
+        )
+        collect_fit_files_to_export(
+            path_to_garmin_device=path_to_garmin_device, path_to_files_to_export=settings.path_to_workouts_dir
         )
     except FailedToMountDevice as e:
         log.error(f"Failed to mount device: {e}")
