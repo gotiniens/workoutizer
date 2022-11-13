@@ -64,7 +64,7 @@ def CreateInterval(form, workout):
     repeat.name = f"Repeat the last 2 steps {repeats} time"
     repeat.duration_type = WorkoutStepDuration.REPEAT_UNTIL_STEPS_CMPLT.value
     repeat.target_repeat_steps = repeats
-    repeat.duration_step = repeat_from_workoutstep  # TODO: If 0 this does not show op in FIT file, bug in library?
+    repeat.duration_step = repeat_from_workoutstep
     repeat.save()
 
     if cool_down:
