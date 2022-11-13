@@ -1,10 +1,42 @@
 {{ interval_form.media }}
 {% include "lib/form_errors.html" %}
 <div class="row">
-        <div class="col-md-8">
-            <div class="form-group">
-                {{ interval_form }}
-            </div>
+    <label class="col-md-4 col-form-label">{{ interval_form.repeats.label }}</label>
+    <div class="col-md-8">
+        <div class="form-group">
+            {{ interval_form.repeats }}
         </div>
-
+    </div>
+</div>
+<div class="row">
+    <label class="col-md-4 col-form-label">{{ interval_form.active_duration_sec.label }}</label>
+    <div class="col-md-8">
+        <div class="form-group">
+            {{ interval_form.active_duration_sec }}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <label class="col-md-4 col-form-label">{{ interval_form.rest_duration_sec.label }}</label>
+    <div class="col-md-8">
+        <div class="form-group">
+            {{ interval_form.rest_duration_sec }}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <label class="col-md-4 col-form-label">{{ interval_form.warm_up.label }}</label>
+    <div class="col-md-8">
+        <div class="form-group">
+            {{ interval_form.warm_up }}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <label class="col-md-4 col-form-label">{{ interval_form.cool_down.label }}</label>
+    <div class="col-md-8">
+        <div class="form-group">
+            {{ interval_form.cool_down }}
+        </div>
+    </div>
 </div>
